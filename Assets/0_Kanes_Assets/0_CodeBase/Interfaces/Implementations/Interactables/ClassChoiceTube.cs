@@ -1,7 +1,6 @@
-using FishNet.Object;
 using UnityEngine;
 
-public class ClassChoiceTube : NetworkBehaviour, IInteractable
+public class ClassChoiceTube : MonoBehaviour, IInteractable
 {
     [SerializeField] DefaultClasses tubeClass;
     public void Interaction(PlayerController player)

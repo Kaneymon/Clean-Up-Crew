@@ -1,4 +1,4 @@
-Library: F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+Library: F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --platform=Windows
 --backend=burst-llvm-16
 --target=X64_SSE2
@@ -9,10 +9,11 @@ Library: F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\BurstOutput\Data\Plug
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Clean up crew_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\Burst
+--temp-folder=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Temp\Burst
+--debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=F:\Unity Projects\Cleanup Crew\Clean up crew\Library\Burst
---output=F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Library\Burst
+--output=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10
@@ -112,10 +113,11 @@ Library: F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\BurstOutput\Data\Plug
 --target-framework=NetFramework
 --linker-options=PdbAltPath="Clean up crew_Data/Plugins/x86_64/lib_burst_generated.pdb"
 --generate-link-xml=Temp\burst.link.xml
---temp-folder=F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\Burst
+--temp-folder=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Temp\Burst
+--debug=Full
 --key-folder=C:/Program Files/Unity/Hub/Editor/6000.0.34f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport
---decode-folder=F:\Unity Projects\Cleanup Crew\Clean up crew\Library\Burst
---output=F:\Unity Projects\Cleanup Crew\Clean up crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
+--decode-folder=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Library\Burst
+--output=F:\Unity Projects\CleanupCrew\Clean-Up-Crew\Temp\BurstOutput\Data\Plugins\x86_64\lib_burst_generated
 --pdb-search-paths=Temp/ManagedSymbols/
 
 --method=Unity.Burst.BurstCompiler+BurstCompilerHelper, Unity.Burst, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null::IsBurstEnabled()--8c2be93e18276203cbd918daa2748a10

@@ -1,10 +1,13 @@
 using FishNet.Object;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerInput : NetworkBehaviour
 {
     private PlayerController player;
     private PlayerInteraction interactions;
+    //private ChatBehaviour chatBehaviour;
     private Vector2 movementInput;
     private Vector2 lookInput;
 
@@ -14,11 +17,17 @@ public class PlayerInput : NetworkBehaviour
     private bool actionPressed;
     private bool interactPressed;
     private bool emotePressed;
+    private bool openChatPressed;
+    private bool sendMessagePressed;
+    private bool closeMenusPressed;
 
+    private bool inputEnabled = true;
     private void Awake()
     {
         player = GetComponent<PlayerController>();
         interactions = GetComponent<PlayerInteraction>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void Update()
@@ -27,8 +36,17 @@ public class PlayerInput : NetworkBehaviour
 
         HandleInput();
         SendInputToCharacter();
+        SendInputToMisc();
     }
 
+    private void FixedUpdate()
+    {
+        if (!inputEnabled) return;
+
+        if (!base.IsOwner) return;
+
+        player.Movement(movementInput); // seeing if this reduces tunelling, RigidBody.Moveposition is designed for fixed updated appaz
+    }
     private void HandleInput()
     {
         // Movement and Look
@@ -42,12 +60,21 @@ public class PlayerInput : NetworkBehaviour
         actionPressed = Input.GetMouseButtonDown(0); // Primary action
         actionPressed = Input.GetMouseButtonDown(1); // Primary action
         interactPressed = Input.GetKeyDown(KeyCode.E);
-        emotePressed = Input.GetKeyDown(KeyCode.Q);
+        emotePressed = Input.GetKeyDown(KeyCode.G);
+        openChatPressed = Input.GetKeyDown(KeyCode.T);
+        sendMessagePressed = Input.GetKeyDown(KeyCode.Return);
+        closeMenusPressed = Input.GetKeyDown(KeyCode.Escape);
     }
 
     private void SendInputToCharacter()
     {
-        player.Movement(movementInput);
+        if(!inputEnabled)
+        {
+            DisableInputBools();
+            return;
+        }
+
+        
         player.CameraLook(lookInput);
 
         if (jumpPressed) player.Jump();
@@ -57,5 +84,42 @@ public class PlayerInput : NetworkBehaviour
         if (emotePressed) player.Emote();
         if (sprintPressed) player.SetSpeedSprint();
         else { player.SetSpeedWalk(); }
+        
+    }
+
+    private void SendInputToMisc()
+    {
+        if (openChatPressed && !ChatBehaviour.instance.GetIsChatBoxOpen())
+        {
+            SetActivePlayerInputs(false);
+            ChatBehaviour.instance.OpenChatBox();
+        }
+        if (sendMessagePressed) ChatBehaviour.instance.TrySendMessage();
+        if (closeMenusPressed)
+        {
+            //maybe make a unity event and jsut call that? i think its less traceable that way though.
+            //i can just reference the UI manager once i create that.
+            ChatBehaviour.instance.CloseChatBox();
+            SetActivePlayerInputs(true);
+        }
+    }
+
+    private void DisableInputBools()
+    {
+        jumpPressed = false;
+        crouchPressed = false;
+        sprintPressed = false;
+        actionPressed = false;
+        actionPressed = false;
+        interactPressed = false;
+        emotePressed = false;
+        //openCloseChatPressed = false; this shouldnt be disabled.
+    }
+
+    public void SetActivePlayerInputs(bool state)
+    {
+        inputEnabled = state;
+        Cursor.visible = !state;
+
     }
 }

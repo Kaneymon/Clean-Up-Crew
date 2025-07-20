@@ -17,8 +17,6 @@ public class PlayerController : NetworkBehaviour, IDamageable
     [SerializeField]
     private float jumpModifier = 10f;
     [SerializeField]
-    private bool clientAuth = true;
-    [SerializeField]
     private Rigidbody rigidBody;
     [SerializeField]
     LayerMask groundLayer;
@@ -82,14 +80,9 @@ public class PlayerController : NetworkBehaviour, IDamageable
     //------------------------------------ MOVEMENT METHODS ------------------------------------
     public void Jump()
     {
-        if (clientAuth)
-        {
+
             JumpLocal();
-        }
-        else
-        {
-            JumpServer();
-        }
+
     }
 
     [ServerRpc]
@@ -111,15 +104,9 @@ public class PlayerController : NetworkBehaviour, IDamageable
     }
     public void Movement(Vector2 input)
     {
-        if (clientAuth)
-        {
+
             MovementLocal(input);
-        }
-        else
-        {
-            //doesnt get run client side for some reason?
-            MovementServer(input);
-        }
+
     }
 
     [ServerRpc]
@@ -129,21 +116,41 @@ public class PlayerController : NetworkBehaviour, IDamageable
     }
     private void MovementLocal(Vector2 input)
     {
-        // Apply input * movement speed to Rigidbody
         Vector3 move = playerBody.transform.right * input.x + playerBody.transform.forward * input.y;
-        rigidBody.MovePosition(playerBody.transform.position + (move * speed * Time.deltaTime));
+
+        if (!rigidBody.SweepTest(move.normalized, out RaycastHit hit, 0.5f)) //here to prevent Tunnelling on lowFPS
+        {
+            rigidBody.MovePosition(playerBody.transform.position + (move * speed * Time.fixedDeltaTime));
+        }
+        else            
+        {
+            Vector3 slideVector = Vector3.ProjectOnPlane(move, hit.normal);
+
+            if (!rigidBody.SweepTest(slideVector.normalized, out RaycastHit hitTwo, 0.5f)) //prevent tunnelling in actual movement vector
+            {
+                rigidBody.MovePosition(playerBody.transform.position + (slideVector * speed * Time.fixedDeltaTime));
+            }
+        }
     }
 
-    float xRotation = 0;
+
+
+    private float xRotation = 0f;
+
     public void CameraLook(Vector2 lookInput)
     {
-        //implement camera and body rotation here
+        if (!IsOwner) return;
+
+        // Rotate the camera up/down (pitch)
         xRotation -= lookInput.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-
         playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.transform.Rotate(Vector3.up * lookInput.x);
+
+        // Rotate the body left/right (yaw) using physics
+        Quaternion deltaRotation = Quaternion.Euler(0f, lookInput.x, 0f);
+        rigidBody.MoveRotation(rigidBody.rotation * deltaRotation);
     }
+
     public void Crouch()
     {
         // Camera + animation changes
