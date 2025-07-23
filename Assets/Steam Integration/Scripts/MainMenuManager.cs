@@ -42,7 +42,7 @@ public class MainMenuManager : MonoBehaviour
     {
         instance.lobbyTitle.text = lobbyName;
         instance.startGameButton.gameObject.SetActive(isHost);
-        instance.lobbyIDText.text = ("LOBBY CODE: " + BootstrapManager.CurrentLobbyID.ToString());
+        instance.lobbyIDText.text = ("LOBBY CODE: " + LobbyCodeGenerator.UlongToLobbyCode(BootstrapManager.CurrentLobbyID).ToString());
         instance.OpenLobby();
     }
 
@@ -54,8 +54,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void JoinLobby()
     {
-        CSteamID steamID = new CSteamID(Convert.ToUInt64(lobbyInput.text));
-        BootstrapManager.JoinByID(steamID);
+        //convert lobby code into a ulong to then be converted into a usable CSteamID.
+        ulong steamID = LobbyCodeGenerator.LobbyCodeToUlong(lobbyInput.text);
+        CSteamID realSteamID = new CSteamID(Convert.ToUInt64(steamID));
+        BootstrapManager.JoinByID(realSteamID);
     }
 
     public void LeaveLobby()
@@ -70,41 +72,4 @@ public class MainMenuManager : MonoBehaviour
         BootstrapNetworkManager.ChangeNetworkScene("GameScene", scenesToClose);
     }
 
-    bool menuOpen = true;
-    bool mainMenuOpen = true;
-    bool lobbyMenuOpen = false;
-    void UpdateMenuBools()
-    {
-        mainMenuOpen = menuScreen.activeSelf;
-        lobbyMenuOpen = lobbyScreen.activeSelf;
-    }
-
-    void ReenableMenus()
-    {
-        menuScreen.SetActive(mainMenuOpen);
-        lobbyScreen.SetActive(lobbyMenuOpen);
-    }
-
-    void OpenCloseMenus()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            if (menuOpen)
-            {
-                UpdateMenuBools();
-                CloseAllScreens();
-                menuOpen = false;
-            }
-            else
-            {
-                ReenableMenus();
-                menuOpen= true;
-            }
-        }
-    }
-
-    private void Update()
-    {
-        OpenCloseMenus();
-    }
 }

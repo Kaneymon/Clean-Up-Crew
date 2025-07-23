@@ -3,7 +3,7 @@ using FishNet.Object;
 using UnityEngine.UI;
 using TMPro;
 using Steamworks;
-public class ChatBehaviour : NetworkBehaviour
+public class ChatBehaviour : NetworkBehaviour, IOpenClosableMenu
 {
     //i need dis/enable chatbox function.
     //i need function to set up typing in chatbox.
@@ -15,10 +15,31 @@ public class ChatBehaviour : NetworkBehaviour
     [SerializeField] TMP_InputField chatInput;
     [SerializeField] GameObject chatBox;
     [SerializeField] GameObject messagesGrid;
-
     private bool isOpen = false;
-
     public static ChatBehaviour instance;
+
+    //===================================================Closbale interface implementation==============
+    public bool menuActiveState { get => isOpen; }
+    public void Open()
+    {
+        isOpen = true;
+        chatBox.SetActive(true);
+        chatInput.gameObject.SetActive(true);
+        chatInput.text = "";
+        ActivateTyping();
+    }
+    public void Close()
+    {
+        isOpen = false;
+        chatBox.SetActive(false);
+        chatInput.gameObject.SetActive(false);
+    }
+    private void OnDestroy()
+    {
+        if (UiManager.instance != null)
+            UiManager.instance.UnregisterMenu(this);
+    }
+
     private void Start()
     {
         if (instance == null)
@@ -31,28 +52,11 @@ public class ChatBehaviour : NetworkBehaviour
         }
 
         chatBox.SetActive(false);
+        if (UiManager.instance != null)
+            UiManager.instance.RegisterMenu(this);
     }
 
-    public bool GetChatBehaviourAvailable()
-    {
-        return enabled;
-    }
-
-    public void OpenChatBox()
-    {
-        chatBox.SetActive(true);
-        chatInput.gameObject.SetActive(true);
-        chatInput.text = "";
-        ActivateTyping();
-        isOpen = true;
-    }
-
-    public void CloseChatBox()
-    {
-        chatBox.SetActive(false);
-        chatInput.gameObject.SetActive(false);
-        isOpen = false;
-    }
+    //=====================================================================================================================
 
     public bool GetIsChatBoxOpen()
     {
@@ -104,4 +108,8 @@ public class ChatBehaviour : NetworkBehaviour
         GameObject newMsg = Instantiate(messagePrefab, messagesGrid.transform);
         newMsg.GetComponent<TMP_Text>().text = messageText;
     }
+
+
+
+
 }

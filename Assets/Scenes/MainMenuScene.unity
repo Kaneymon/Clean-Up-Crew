@@ -1621,14 +1621,14 @@ MonoBehaviour:
   m_VerticalScrollbarEventHandler: {fileID: 0}
   m_LayoutGroup: {fileID: 0}
   m_ScrollSensitivity: 1
-  m_ContentType: 2
+  m_ContentType: 4
   m_InputType: 0
   m_AsteriskChar: 42
-  m_KeyboardType: 4
+  m_KeyboardType: 1
   m_LineType: 0
   m_HideMobileInput: 0
   m_HideSoftKeyboard: 0
-  m_CharacterValidation: 2
+  m_CharacterValidation: 4
   m_RegexValue: 
   m_GlobalPointSize: 14
   m_CharacterLimit: 0
@@ -6208,6 +6208,7 @@ GameObject:
   - component: {fileID: 527523790}
   - component: {fileID: 527523789}
   - component: {fileID: 527523788}
+  - component: {fileID: 527523791}
   m_Layer: 0
   m_Name: LobbyMenu
   m_TagString: Untagged
@@ -6302,6 +6303,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &527523791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527523786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ed390cc0f1ae34f8c53806b0490ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  openMenuEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  closeMenuEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &538258022
 GameObject:
   m_ObjectHideFlags: 0

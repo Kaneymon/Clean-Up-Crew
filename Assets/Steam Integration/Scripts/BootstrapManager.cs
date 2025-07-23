@@ -1,7 +1,9 @@
 using FishNet.Managing;
+using Heathen.SteamworksIntegration;
 using Steamworks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Heathen.SteamworksIntegration.API;
 
 public class BootstrapManager : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class BootstrapManager : MonoBehaviour
     [SerializeField] private string menuName = "MenuSceneSteam";
     [SerializeField] private NetworkManager _networkManager;
     [SerializeField] private FishySteamworks.FishySteamworks _fishySteamworks;
+    [SerializeField] private SteamSettings initializeSettings;
+
 
     protected Callback<LobbyCreated_t> LobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> JoinRequest;
@@ -23,16 +27,38 @@ public class BootstrapManager : MonoBehaviour
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
         LobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+
+        App.evtSteamInitialized.AddListener(HandleInitialized);
+        App.evtSteamInitializationError.AddListener(HandleInitalizationError);
+        InitializeSteam();
+    }
+
+    //api ref: https://kb.heathen.group/steam/initialization/unity-initialization#pure-code-1
+    void HandleInitialized()
+    {
+        Debug.Log("Success, Steam is ready to use, YIPPEEEE");
+        GoToMenu();
+    }
+
+    void HandleInitalizationError(string message)
+    {
+        Debug.LogError("OH NO! Failure, Steam reported error: " + message);
+    }
+
+    private void InitializeSteam()
+    {
+        initializeSettings.Initialize();
     }
 
     public void GoToMenu()
     {
+        Debug.Log("GOING TO MAIN MENU!");
         SceneManager.LoadScene(menuName, LoadSceneMode.Additive);
     }
 
     public static void CreateLobby()
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 4);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, 4);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)
@@ -42,6 +68,7 @@ public class BootstrapManager : MonoBehaviour
             return;
 
         CurrentLobbyID = callback.m_ulSteamIDLobby;
+
         SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), "HostAddress", SteamUser.GetSteamID().ToString());
         SteamMatchmaking.SetLobbyData(new CSteamID(CurrentLobbyID), "name", SteamFriends.GetPersonaName().ToString() + "'s lobby");
         _fishySteamworks.SetClientAddress(SteamUser.GetSteamID().ToString());

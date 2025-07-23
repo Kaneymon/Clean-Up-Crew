@@ -41,6 +41,7 @@ public class PlayerInput : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        TogglePlayerInput();
         if (!inputEnabled) return;
 
         if (!base.IsOwner) return;
@@ -89,18 +90,17 @@ public class PlayerInput : NetworkBehaviour
 
     private void SendInputToMisc()
     {
-        if (openChatPressed && !ChatBehaviour.instance.GetIsChatBoxOpen())
+        if (openChatPressed && !ChatBehaviour.instance.menuActiveState)
         {
-            SetActivePlayerInputs(false);
-            ChatBehaviour.instance.OpenChatBox();
+            UiManager.instance.OpenMenu(ChatBehaviour.instance);
         }
-        if (sendMessagePressed) ChatBehaviour.instance.TrySendMessage();
+        if (sendMessagePressed)
+        {
+            ChatBehaviour.instance.TrySendMessage();
+        }
         if (closeMenusPressed)
         {
-            //maybe make a unity event and jsut call that? i think its less traceable that way though.
-            //i can just reference the UI manager once i create that.
-            ChatBehaviour.instance.CloseChatBox();
-            SetActivePlayerInputs(true);
+            UiManager.instance.CloseTopMenu();      
         }
     }
 
@@ -120,6 +120,20 @@ public class PlayerInput : NetworkBehaviour
     {
         inputEnabled = state;
         Cursor.visible = !state;
+    }
 
+    private void TogglePlayerInput()
+    {
+        //keep adding Active state getter checks to the first condition.
+        if (ChatBehaviour.instance.menuActiveState)
+        {
+            inputEnabled = false;
+            Cursor.visible = true;
+        }
+        else
+        {
+            inputEnabled = true;
+            Cursor.visible = false;
+        }
     }
 }
