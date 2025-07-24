@@ -18,7 +18,7 @@ public class ChatBehaviour : NetworkBehaviour, IOpenClosableMenu
     private bool isOpen = false;
     public static ChatBehaviour instance;
 
-    //===================================================Closbale interface implementation==============
+    //=================================================== Closbale interface implementation ==============
     public bool menuActiveState { get => isOpen; }
     public void Open()
     {
@@ -70,7 +70,7 @@ public class ChatBehaviour : NetworkBehaviour, IOpenClosableMenu
         //the glimpse box is a 1 element queue.
     }
 
-    private void ActivateTyping()
+    public void ActivateTyping()
     {
         chatInput.ActivateInputField();
     }

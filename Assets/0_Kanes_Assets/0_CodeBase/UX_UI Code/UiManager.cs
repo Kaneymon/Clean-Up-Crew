@@ -41,7 +41,6 @@ public class UiManager : MonoBehaviour
         {
             KanesHelperMethods.RemoveFromStack(openMenus,menu);
         }
-
     }
 
     public void CloseTopMenu()

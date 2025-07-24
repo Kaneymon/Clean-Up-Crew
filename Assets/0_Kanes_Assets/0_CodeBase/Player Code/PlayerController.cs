@@ -13,7 +13,7 @@ public class PlayerController : NetworkBehaviour, IDamageable
     private GameObject playerBody;
     [SerializeField]
     private float speed = 6f;
-    private float speedFactor = 2f;
+    private float speedFactor = 1f;
     [SerializeField]
     private float jumpModifier = 10f;
     [SerializeField]
