@@ -1,8 +1,10 @@
+using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Transporting;
+using FishySteamworks;
 using Heathen.SteamworksIntegration;
+using Steamworks;
 using UnityEngine;
-
 
 public class ProximityChat : NetworkBehaviour
 {
@@ -28,8 +30,21 @@ public class ProximityChat : NetworkBehaviour
 
     private void Start()
     {
-        playerMicRecorder.StartRecording();
+        Debug.Log("start function");
     }
+
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (IsOwner)
+        {
+            Debug.Log("OnStartClient called, I am the owner.");
+            playerMicRecorder.StartRecording();
+        }
+    }
+
 
     //hook this up to an event that pass through a byte[] array.
     public void SendVoiceData(byte[] data)
@@ -45,7 +60,7 @@ public class ProximityChat : NetworkBehaviour
         ReceiveVoiceData(data);
     }
 
-    [ObserversRpc(ExcludeOwner = false)]
+    [ObserversRpc(ExcludeOwner = true)]
     private void ReceiveVoiceData(byte[] data)
     {
         //Debug.Log("voice data received, playing audio.");

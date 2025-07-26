@@ -87,7 +87,6 @@ public class PlayerMicRecorder : MonoBehaviour
         packetCounter -= Time.unscaledDeltaTime;
         if (packetCounter >= 0) { return; }
         packetCounter = bufferLength;
-        Debug.Log(recordingState.ToString() + " " + recordingState);
         switch (recordingState)
         {
             
