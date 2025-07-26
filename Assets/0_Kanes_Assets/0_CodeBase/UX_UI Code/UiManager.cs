@@ -5,6 +5,7 @@ using static UnityEngine.GraphicsBuffer;
 public class UiManager : MonoBehaviour
 {
     public static UiManager instance;
+    [SerializeField] ToggleableMenu SettingsMenu;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class UiManager : MonoBehaviour
     // handle closing menus in a centralized way using interfaces and stuff.
     private Stack<IOpenClosableMenu> openMenus;//when the user presses ESC i want to check through each of these, and the moment i encounter one which is open, i will close it, pop it, push it onto the other stack and stop the operation.
     private List<IOpenClosableMenu> closedMenus;
-    private List<GameObject> playerFreezingMenus;
+    public List<GameObject> playerFreezingMenus;
 
     public void RegisterMenu(IOpenClosableMenu menu)
     {
@@ -69,5 +70,20 @@ public class UiManager : MonoBehaviour
         {
             Debug.Log("Couldnt find menu in closedMenus List, it must be unregistered");
         }
+    }
+
+    public bool IsAFreezingMenuOpen()
+    {
+        bool result = false;
+        foreach (var menu in playerFreezingMenus)
+        {
+            result = result || menu.activeSelf;
+        }
+        return result;
+    }
+
+    public void OpenSettingsMenu()
+    {
+        OpenMenu(SettingsMenu);
     }
 }

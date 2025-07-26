@@ -20,6 +20,7 @@ public class PlayerInput : NetworkBehaviour
     private bool openChatPressed;
     private bool sendMessagePressed;
     private bool closeMenusPressed;
+    private bool OpenSettingsPressed;
 
     private bool inputEnabled = true;
     private void Awake()
@@ -65,6 +66,7 @@ public class PlayerInput : NetworkBehaviour
         openChatPressed = Input.GetKeyDown(KeyCode.T);
         sendMessagePressed = Input.GetKeyDown(KeyCode.Return);
         closeMenusPressed = Input.GetKeyDown(KeyCode.Escape);
+        OpenSettingsPressed = Input.GetKeyDown(KeyCode.P);
     }
 
     private void SendInputToCharacter()
@@ -102,6 +104,7 @@ public class PlayerInput : NetworkBehaviour
         {
             UiManager.instance.CloseTopMenu();      
         }
+        if (OpenSettingsPressed) { UiManager.instance.OpenSettingsMenu(); }
     }
 
     private void DisableInputBools()
@@ -125,7 +128,7 @@ public class PlayerInput : NetworkBehaviour
     private void TogglePlayerInput()
     {
         //keep adding Active state getter checks to the first condition.
-        if (ChatBehaviour.instance.menuActiveState)
+        if (UiManager.instance.IsAFreezingMenuOpen())
         {
             inputEnabled = false;
             Cursor.visible = true;

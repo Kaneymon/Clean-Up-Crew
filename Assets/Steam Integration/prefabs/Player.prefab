@@ -927,7 +927,8 @@ GameObject:
   - component: {fileID: 8375226113999960850}
   - component: {fileID: 8746477096433747147}
   - component: {fileID: 3396622156852715892}
-  - component: {fileID: 543323771321427433}
+  - component: {fileID: 6950746798484497439}
+  - component: {fileID: 5779250513070364439}
   - component: {fileID: 3267194394635562875}
   - component: {fileID: 2534076643739654814}
   m_Layer: 0
@@ -1157,7 +1158,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   interactionRange: 4
---- !u!114 &543323771321427433
+--- !u!114 &6950746798484497439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1166,13 +1167,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 6853951584253570784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b390f15d55e2584d921c89f7e29523d, type: 3}
+  m_Script: {fileID: 11500000, guid: fa7b67601b10a1c41be8b0b042ab2726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: df4217bc8fcda0444b256737c8d7b03a, type: 2}
+  bufferLength: 0.25
+  eventVoiceStream:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3267194394635562875}
+        m_TargetAssemblyTypeName: ProximityChat, Assembly-CSharp
+        m_MethodName: SendVoiceData
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  isRecording: 0
+--- !u!114 &5779250513070364439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6853951584253570784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baecbf938d4a4af448c4f6461a30c3c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   outputSource: {fileID: 2534076643739654814}
-  sampleRateMethod: 1
-  customSampleRate: 28000
+  customSampleRate: 16000
   playbackDelay: 0.25
+  encodingTime: 0
 --- !u!114 &3267194394635562875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1188,6 +1219,8 @@ MonoBehaviour:
   _componentIndexCache: 255
   _addedNetworkObject: {fileID: 7205101549405634368}
   _networkObjectCache: {fileID: 0}
+  playerMicRecorder: {fileID: 6950746798484497439}
+  voiceStream: {fileID: 5779250513070364439}
 --- !u!82 &2534076643739654814
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1203,7 +1236,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
