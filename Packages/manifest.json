@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "com.heathen.steamworksfoundation": "https://github.com/heathen-engineering/Toolkit-for-Steamworks-Foundation.git?path=Unity/com.heathen.steamworksfoundation",
+    "com.heathen.steamworks": "file:F:/Unity Projects/SourceRepo/Unity/2025/Assets/Toolkits/com.heathen.steamworks",
     "com.heathen.systemcore": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
-    "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net",
+    "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#2025.161.0",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.feature.development": "1.0.2",
     "com.unity.inputsystem": "1.11.2",

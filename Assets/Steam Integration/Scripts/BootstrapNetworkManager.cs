@@ -21,6 +21,7 @@ public class BootstrapNetworkManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     void CloseScenes(string[] scenesToClose)
     {
+        if(scenesToClose.Length == 0) {return; }
         CloseScenesObserver(scenesToClose);
     }
 

@@ -15,6 +15,7 @@ public class PlayerInventory : NetworkBehaviour
     [ServerRpc]
     public void AddItemServer(string newItemsId, int quantity = 1)
     {
+        if (inventory.Count <= 0) { Debug.Log("inventory synclist is not initialised yet bro"); }
         int inventoryIndex = GetNextFreeInventorySlot();
         if (inventoryIndex == -1)
         {
@@ -58,7 +59,7 @@ public class PlayerInventory : NetworkBehaviour
         //needs to spawn an item from the inventory.
     }
      
-    public void InitializeInventory()
+    private void InitializeInventory()
     {
         for(int i = 0; i < 6; i++)
         {
@@ -79,10 +80,13 @@ public class PlayerInventory : NetworkBehaviour
         return -1; // fail outcome.
     }
 
-    private void Start()
+    public override void OnStartServer()
     {
-        InitializeInventory();
+        base.OnStartServer();
+        if (IsServerInitialized)
+            InitializeInventory();
     }
+
 }
 
 public struct InventorySlot

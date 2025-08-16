@@ -3,7 +3,6 @@ using FishNet.Managing;
 using FishNet.Object;
 using FishNet.Transporting;
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 public class PlayerManager : NetworkBehaviour
