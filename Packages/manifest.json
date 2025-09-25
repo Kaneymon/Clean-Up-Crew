@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.heathen.steamworks": "file:F:/Unity Projects/SourceRepo/Unity/2025/Assets/Toolkits/com.heathen.steamworks",
+    "com.heathen.steamworks": "file:../Dependencies/SteamworksHeathens",
     "com.heathen.systemcore": "https://github.com/heathen-engineering/SystemCore.git?path=/com.heathen.systemcore",
     "com.rlabrecque.steamworks.net": "https://github.com/rlabrecque/Steamworks.NET.git?path=/com.rlabrecque.steamworks.net#2025.161.0",
     "com.unity.collab-proxy": "2.8.2",

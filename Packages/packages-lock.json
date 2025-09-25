@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.heathen.steamworks": {
-      "version": "file:F:/Unity Projects/SourceRepo/Unity/2025/Assets/Toolkits/com.heathen.steamworks",
+      "version": "file:../Dependencies/SteamworksHeathens",
       "depth": 0,
       "source": "local",
       "dependencies": {}
